@@ -66,7 +66,10 @@ func saveToken(path string, token *oauth2.Token) {
 		log.Fatalf("Unable to cache oauth token: %v", err)
 	}
 	defer f.Close()
-	json.NewEncoder(f).Encode(token)
+	errEnc := json.NewEncoder(f).Encode(token)
+	if errEnc != nil {
+		log.Fatalf("Error encoding: %v", errEnc)
+	}
 }
 
 func main() {
