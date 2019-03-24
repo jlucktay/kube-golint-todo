@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	b, err := ioutil.ReadFile(credentialsJson)
+	b, err := ioutil.ReadFile(credentialsJSON())
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
 	}

@@ -2,12 +2,14 @@ package main
 
 import "os"
 
-var configBasePath string
-var credentialsJson string
-var tokenJson string
+func secretsBasePath() string {
+	return os.ExpandEnv("${HOME}/.config/kube-golint-todo/")
+}
 
-func init() {
-	configBasePath = os.ExpandEnv("${HOME}/.config/kube-golint-todo/")
-	credentialsJson = configBasePath + "credentials.json"
-	tokenJson = configBasePath + "token.json"
+func credentialsJSON() string {
+	return secretsBasePath() + "credentials.json"
+}
+
+func tokenJSON() string {
+	return secretsBasePath() + "token.json"
 }

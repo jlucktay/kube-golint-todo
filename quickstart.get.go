@@ -16,10 +16,10 @@ func getClient(config *oauth2.Config) *http.Client {
 	// The file token.json stores the user's access and refresh tokens, and is
 	// created automatically when the authorization flow completes for the first
 	// time.
-	tok, err := tokenFromFile(tokenJson)
+	tok, err := tokenFromFile(tokenJSON())
 	if err != nil {
 		tok = getTokenFromWeb(config)
-		saveToken(tokenJson, tok)
+		saveToken(tokenJSON(), tok)
 	}
 	return config.Client(context.Background(), tok)
 }
