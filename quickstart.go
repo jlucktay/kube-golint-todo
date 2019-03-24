@@ -72,7 +72,8 @@ func saveToken(path string, token *oauth2.Token) {
 	}
 }
 
-func main() {
+// demo used to be main. It shows off the basic workflow for how to read a Google Sheet via the API.
+func demo() {
 	b, err := ioutil.ReadFile("credentials.json")
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
