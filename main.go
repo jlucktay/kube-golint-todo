@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"sync"
 
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/sheets/v4"
@@ -27,7 +28,22 @@ func main() {
 		log.Fatalf("Unable to retrieve Sheets client: %v", err)
 	}
 
-	for _, sub := range subtractPatternsFromFails(getPatterns(srv), getLintFails()) {
+	// Set up to run 2x fetch requests to Google Sheets and GitHub concurrently
+	var wg sync.WaitGroup
+	var p, lf []string
+
+	wg.Add(2)
+	go func(s *sheets.Service) {
+		defer wg.Done()
+		p = getPatterns(s)
+	}(srv)
+	go func() {
+		defer wg.Done()
+		lf = getLintFails()
+	}()
+	wg.Wait()
+
+	for _, sub := range subtractPatternsFromFails(p, lf) {
 		fmt.Println(sub)
 	}
 }
