@@ -26,7 +26,9 @@ func getPatterns(srv *sheets.Service) []string {
 		fmt.Println("No data found.")
 	} else {
 		for _, b := range resp.Values {
-			patterns = append(patterns, b[0].(string))
+			if len(b) > 0 && len(b[0].(string)) > 0 {
+				patterns = append(patterns, b[0].(string))
+			}
 		}
 	}
 
