@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -22,9 +21,7 @@ func getPatterns(srv *sheets.Service) []string {
 
 	patterns := make([]string, 0)
 
-	if len(resp.Values) == 0 {
-		fmt.Println("No data found.")
-	} else {
+	if len(resp.Values) > 0 {
 		for _, b := range resp.Values {
 			if len(b) > 0 && len(b[0].(string)) > 0 {
 				patterns = append(patterns, b[0].(string))
